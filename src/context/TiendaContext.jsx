@@ -1,0 +1,27 @@
+import { createContext, useContext } from 'react';
+import { useProductos } from '../hooks/useProductos';
+import { useUsuarios } from '../hooks/useUsuarios';
+import { useCarrito } from '../hooks/useCarrito';
+import { useNotificacion } from './NotificacionContext';
+
+const TiendaContext = createContext(null);
+
+/** Estado global de la tienda: productos, usuarios y carrito (todos respaldados por db.js / localStorage). */
+export function TiendaProvider({ children }) {
+  const { notificar } = useNotificacion();
+  const productosApi = useProductos();
+  const usuariosApi = useUsuarios();
+  const carritoApi = useCarrito(productosApi.productos, notificar);
+
+  return (
+    <TiendaContext.Provider value={{ ...productosApi, ...usuariosApi, carrito: carritoApi, notificar }}>
+      {children}
+    </TiendaContext.Provider>
+  );
+}
+
+export function useTienda() {
+  const ctx = useContext(TiendaContext);
+  if (!ctx) throw new Error('useTienda debe usarse dentro de <TiendaProvider>');
+  return ctx;
+}

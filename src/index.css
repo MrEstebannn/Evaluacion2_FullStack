@@ -1,0 +1,42 @@
+html {
+  scroll-behavior: smooth;
+}
+
+[id] {
+  scroll-margin-top: 100px;
+}
+
+body {
+  padding-top: 90px;
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}
+
+/* Color corporativo de Hype Academic */
+.btn-hype {
+  background-color: #512da8;
+  border: none;
+}
+.btn-hype:hover,
+.btn-hype:focus {
+  background-color: #432090;
+}
+.bg-hype {
+  background-color: #512da8;
+}
+.texto-hype {
+  color: #512da8;
+}
+
+.contenedor-toasts {
+  z-index: 2000;
+  margin-top: 90px;
+}
+
+.img-cover-160 { height: 160px; object-fit: cover; }
+.img-cover-180 { height: 180px; object-fit: cover; }
+.img-cover-220 { height: 220px; object-fit: cover; }
+
+.menu-lateral-link h4 { margin: 0; }

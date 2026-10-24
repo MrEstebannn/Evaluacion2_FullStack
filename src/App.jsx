@@ -19,7 +19,7 @@ import { useTienda } from './context/TiendaContext';
  * y cuál modal está abierto (estado `modal`). Reemplaza mostrarSeccion() del HTML.
  */
 export default function App() {
-  const { carrito, registrarUsuario, notificar } = useTienda();
+  const { carrito, registrarUsuario, crearOrden, productos, actualizarProducto, notificar } = useTienda();
   const [seccion, setSeccion] = useState('inicio');
   const [modal, setModal] = useState(null); // 'login' | 'registro' | 'carrito' | 'pago' | null
   const [menuAbierto, setMenuAbierto] = useState(false);
@@ -56,10 +56,30 @@ export default function App() {
   };
 
   const alPagoExitoso = () => {
+    // Registra la compra como orden para que aparezca en el panel de administración
+    crearOrden({
+      cliente: { run: '—', nombre: 'Cliente web', correo: 'sin-sesion@hype.cl' },
+      items: carrito.items.map(({ nombre, precio, cantidad, idProducto }) => ({ nombre, precio, cantidad, ...(idProducto && { idProducto }) })),
+      descuento: carrito.descuento,
+    });
+
+    // Descuenta del inventario los productos vendidos (las clases y membresías no tienen stock)
+    carrito.items
+      .filter((item) => item.idProducto)
+      .forEach((item) => {
+        const producto = productos.find((p) => p.id === item.idProducto);
+        if (producto) actualizarProducto(producto.id, { stock: Math.max(producto.stock - item.cantidad, 0) });
+      });
+
     notificar('¡Pago procesado con éxito! Gracias por tu compra.');
     carrito.vaciarCarrito();
     cerrarModal();
   };
+
+  // El panel de administración tiene su propio layout (sin la barra de la tienda)
+  if (seccion === 'admin') {
+    return <AdminPage onSalirATienda={() => irA('inicio')} />;
+  }
 
   return (
     <>
@@ -79,7 +99,6 @@ export default function App() {
         {seccion === 'nosotros' && <NosotrosPage />}
         {seccion === 'blogs' && <BlogsPage />}
         {seccion === 'contacto' && <ContactoPage />}
-        {seccion === 'admin' && <AdminPage />}
       </main>
 
       <LoginModal abierto={modal === 'login'} onCerrar={cerrarModal} onLoginExitoso={alLoginExitoso} />

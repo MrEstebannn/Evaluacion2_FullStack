@@ -13,6 +13,7 @@ import ContactoPage from './pages/ContactoPage';
 import AdminPage from './pages/AdminPage';
 import { ITEMS_MENU } from './data/catalogo';
 import { useTienda } from './context/TiendaContext';
+import { useSesionCliente } from './hooks/useSesionCliente';
 import { empujarHistorial, estadoActual, reemplazarHistorial } from './utils/historial';
 
 export default function App() {
@@ -21,6 +22,7 @@ export default function App() {
   const [modal, setModal] = useState(null);
   const [menuAbierto, setMenuAbierto] = useState(false);
   const [busquedaNavbar, setBusquedaNavbar] = useState({ texto: '', n: 0 });
+  const sesion = useSesionCliente();
 
   const cerrarModal = () => setModal(null);
 
@@ -61,14 +63,24 @@ export default function App() {
 
   const seleccionarItemMenu = (item) => (item.tipo === 'ancla' ? irAAncla(item.destino) : irA(item.destino));
 
-  const alLoginExitoso = () => {
-    notificar('¡Inicio de sesión exitoso!');
-    cerrarModal();
+  const alLoginExitoso = (credenciales) => {
+    const resultado = sesion.iniciarSesion(credenciales);
+    if (resultado.ok) {
+      notificar(`¡Bienvenido/a, ${resultado.usuario.nombre}!`);
+      cerrarModal();
+    }
+    return resultado;
+  };
+
+  const cerrarSesionCliente = () => {
+    sesion.cerrarSesion();
+    notificar('Sesión cerrada.', 'secondary');
   };
 
   const alRegistrar = (datosUsuario) => {
     const resultado = registrarUsuario(datosUsuario);
     if (resultado.ok) {
+      sesion.abrirSesion(datosUsuario.run);
       notificar('Usuario registrado exitosamente.');
       cerrarModal();
     }
@@ -108,6 +120,8 @@ export default function App() {
         onAbrirCarrito={() => setModal('carrito')}
         onAbrirMenu={() => setMenuAbierto(true)}
         onBuscar={buscarDesdeNavbar}
+        usuario={sesion.usuario}
+        onCerrarSesion={cerrarSesionCliente}
       />
       <MenuLateral abierto={menuAbierto} items={ITEMS_MENU} onCerrar={() => setMenuAbierto(false)} onSeleccionar={seleccionarItemMenu} />
 

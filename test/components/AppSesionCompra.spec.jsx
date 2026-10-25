@@ -35,11 +35,12 @@ describe('App (sesión del cliente y compra)', () => {
   afterAll(limpiarAlmacenamiento);
 
   it('el login con contraseña incorrecta muestra el error y no abre sesión', () => {
-    renderConTienda(<App />);
-    iniciarSesion('ana@gmail.com', 'zzzz');
-    expect(screen.queryByText('Contraseña incorrecta.')).not.toBeNull();
-    expect(screen.queryByText('Iniciar Sesión')).not.toBeNull();
-  });
+  renderConTienda(<App />);
+  iniciarSesion('ana@gmail.com', 'zzzz');
+  expect(screen.queryByText('Contraseña incorrecta.')).not.toBeNull();
+  expect(screen.queryByRole('dialog')).not.toBeNull();
+  expect(screen.queryByTestId('usuario-activo')).toBeNull();
+});
 
   it('el login correcto muestra el saludo y permite cerrar sesión', () => {
     renderConTienda(<App />);

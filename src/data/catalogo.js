@@ -70,3 +70,24 @@ export const ITEMS_MENU = [
   { etiqueta: 'Panel Administrador', tipo: 'seccion', destino: 'admin' },
   { etiqueta: 'Contacto Info', tipo: 'ancla', destino: 'contacto-info' },
 ];
+
+// Cuentas de acceso al panel de administración (demo para la evaluación; en un sistema real
+// las credenciales viven en el backend y las contraseñas nunca van en el código).
+export const CUENTAS_ADMIN = [
+  {
+    usuario: 'Don Carter',
+    password: '123456',
+    perfil: {
+      run: '176543210',
+      nombre: 'Don',
+      apellidos: 'Carter',
+      correo: 'don.carter@duocuc.cl',
+      tipo: 'Administrador',
+      region: 'Región Metropolitana de Santiago',
+      comuna: 'Santiago',
+      direccion: 'Av. Principal #123',
+    },
+  },
+];
+
+export const CLAVE_SESION_ADMIN = 'hype_admin_sesion';

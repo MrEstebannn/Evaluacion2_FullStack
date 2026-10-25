@@ -2,7 +2,7 @@ import { useState } from 'react';
 
 export const iniciales = (usuario) => `${usuario?.nombre?.[0] ?? ''}${usuario?.apellidos?.[0] ?? ''}`.toUpperCase() || 'A';
 
-export default function Topbar({ migas, admin, ir, onMenu, onSalirATienda }) {
+export default function Topbar({ migas, admin, ir, onMenu, onSalirATienda, onCerrarSesion }) {
   const [menu, setMenu] = useState(false);
 
   return (
@@ -31,7 +31,7 @@ export default function Topbar({ migas, admin, ir, onMenu, onSalirATienda }) {
             <li><button type="button" className="dropdown-item" onClick={() => { ir('perfil'); setMenu(false); }}><i className="bi bi-person me-2" />Mi perfil</button></li>
             <li><button type="button" className="dropdown-item" onClick={onSalirATienda}><i className="bi bi-shop me-2" />Ver tienda</button></li>
             <li><hr className="dropdown-divider" /></li>
-            <li><button type="button" className="dropdown-item text-danger" onClick={onSalirATienda}><i className="bi bi-box-arrow-left me-2" />Cerrar sesión</button></li>
+            <li><button type="button" className="dropdown-item text-danger" onClick={onCerrarSesion}><i className="bi bi-box-arrow-left me-2" />Cerrar sesión</button></li>
           </ul>
         )}
       </div>

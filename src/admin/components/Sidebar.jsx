@@ -20,7 +20,7 @@ const MENU = [
   { vista: 'perfil', icono: 'person-circle', etiqueta: 'Perfil' },
 ];
 
-export default function Sidebar({ ruta, ir, abierto, onSalirATienda, onCerrar }) {
+export default function Sidebar({ ruta, ir, abierto, onSalirATienda, onCerrarSesion, onCerrar }) {
   const [grupoAbierto, setGrupoAbierto] = useState(true);
   const estaActivo = (item) => (item.activas ?? [item.vista]).includes(ruta.vista);
 
@@ -71,7 +71,7 @@ export default function Sidebar({ ruta, ir, abierto, onSalirATienda, onCerrar })
           <button type="button" className="btn btn-light fw-semibold" onClick={onSalirATienda}>
             <i className="bi bi-shop me-2" />Ver tienda
           </button>
-          <button type="button" className="btn btn-outline-danger fw-semibold" onClick={onSalirATienda}>
+          <button type="button" className="btn btn-outline-danger fw-semibold" onClick={onCerrarSesion}>
             <i className="bi bi-box-arrow-left me-2" />Cerrar sesión
           </button>
         </div>

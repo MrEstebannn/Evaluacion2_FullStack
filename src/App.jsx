@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Navbar from './components/layout/Navbar';
 import MenuLateral from './components/layout/MenuLateral';
 import LoginModal from './components/auth/LoginModal';
@@ -13,6 +13,7 @@ import ContactoPage from './pages/ContactoPage';
 import AdminPage from './pages/AdminPage';
 import { ITEMS_MENU } from './data/catalogo';
 import { useTienda } from './context/TiendaContext';
+import { empujarHistorial, estadoActual, reemplazarHistorial } from './utils/historial';
 
 /**
  * Componente raíz: decide qué "página" se muestra (estado `seccion`)
@@ -26,15 +27,34 @@ export default function App() {
 
   const cerrarModal = () => setModal(null);
 
+  // Historial del navegador: el botón Atrás vuelve a la sección anterior en vez de salir del sitio
+  useEffect(() => {
+    if (!estadoActual()?.seccion) reemplazarHistorial({ seccion: 'inicio' });
+
+    const alVolver = (e) => {
+      setSeccion(e.state?.seccion ?? 'inicio');
+      setModal(null);
+      setMenuAbierto(false);
+    };
+    window.addEventListener('popstate', alVolver);
+    return () => window.removeEventListener('popstate', alVolver);
+  }, []);
+
   const irA = (destino) => {
-    setSeccion(destino);
+    if (destino !== seccion) {
+      empujarHistorial(destino === 'admin' ? { seccion: 'admin', ruta: { vista: 'dashboard' } } : { seccion: destino });
+      setSeccion(destino);
+    }
     setMenuAbierto(false);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   // Vuelve al Inicio y baja con scroll suave hasta un bloque (Clases, Membresías o Contacto)
   const irAAncla = (idAncla) => {
-    setSeccion('inicio');
+    if (seccion !== 'inicio') {
+      empujarHistorial({ seccion: 'inicio' });
+      setSeccion('inicio');
+    }
     setMenuAbierto(false);
     setTimeout(() => document.getElementById(idAncla)?.scrollIntoView({ behavior: 'smooth' }), 60);
   };

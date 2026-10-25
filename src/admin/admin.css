@@ -103,6 +103,16 @@ body.admin-mode {
 }
 .avatar-grande { width: 84px; height: 84px; font-size: 1.8rem; }
 
+/* Pantalla de acceso */
+.admin-login {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  padding: 1.5rem;
+  background: radial-gradient(circle at 20% 10%, #3a2a78 0%, #1b1535 55%, #120d28 100%);
+}
+.admin-login-card { width: 100%; max-width: 440px; }
+
 @media print {
   .admin-sidebar, .admin-topbar, .no-print, .admin-overlay { display: none !important; }
   .admin-main { margin: 0; }

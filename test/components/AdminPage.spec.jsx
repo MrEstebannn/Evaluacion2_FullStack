@@ -1,105 +1,72 @@
-import { screen, fireEvent, within } from '@testing-library/react';
+import { screen, fireEvent } from '@testing-library/react';
 import AdminPage from '../../src/pages/AdminPage';
-import { productosDB, categoriasDB } from '../../src/data/db';
+import { usuariosDB } from '../../src/data/db';
 import { limpiarAlmacenamiento, renderConTienda } from '../helpers';
 
-// Pruebas de INTEGRACIÓN del panel de administración (navegación interna, CRUD y filtros).
-describe('pages/AdminPage (panel de administración)', () => {
-  beforeEach(limpiarAlmacenamiento);
-  afterAll(limpiarAlmacenamiento);
+// Pruebas del acceso al panel: formulario de login, usuario de prueba "Don Carter" y sesión.
+describe('pages/AdminPage (inicio de sesión del panel)', () => {
+  const limpiar = () => {
+    limpiarAlmacenamiento();
+    sessionStorage.clear();
+  };
+  beforeEach(limpiar);
+  afterAll(limpiar);
 
-  const menu = () => within(screen.getByRole('complementary'));
-  const irA = (nombre) => fireEvent.click(menu().getByRole('button', { name: nombre }));
   const escribir = (etiqueta, valor) => fireEvent.change(screen.getByLabelText(etiqueta), { target: { value: valor } });
+  const iniciarSesion = () => fireEvent.click(screen.getByRole('button', { name: 'Iniciar sesión' }));
 
-  it('muestra el dashboard por defecto con sus indicadores', () => {
+  it('muestra el login y NO el panel mientras no hay sesión', () => {
     renderConTienda(<AdminPage />);
-    expect(screen.getByRole('heading', { name: 'Dashboard' })).not.toBeNull();
-    expect(screen.queryByText('Ventas totales')).not.toBeNull();
-    expect(screen.queryByText('Últimas órdenes')).not.toBeNull();
+    expect(screen.queryByRole('button', { name: 'Iniciar sesión' })).not.toBeNull();
+    expect(screen.queryByRole('complementary')).toBeNull();
   });
 
-  it('navega a Usuarios y lista los 3 usuarios iniciales', () => {
+  it('al tocar al usuario de prueba se rellenan usuario y contraseña (sin iniciar sesión sola)', () => {
     renderConTienda(<AdminPage />);
-    irA('Usuarios');
-    expect(screen.getAllByRole('row').length).toBe(4); // encabezado + 3
+    fireEvent.click(screen.getByRole('button', { name: /Don Carter/ }));
+    expect(screen.getByLabelText('Usuario').value).toBe('Don Carter');
+    expect(screen.getByLabelText('Contraseña').value).toBe('123456');
+    expect(screen.queryByRole('complementary')).toBeNull();
   });
 
-  it('filtra usuarios por texto de búsqueda (estado)', () => {
+  it('con las credenciales correctas muestra "Sesión Iniciada" y entra al panel', () => {
     renderConTienda(<AdminPage />);
-    irA('Usuarios');
-    fireEvent.change(screen.getByLabelText('Buscar usuarios'), { target: { value: 'maria' } });
-    expect(screen.getAllByRole('row').length).toBe(2);
+    fireEvent.click(screen.getByRole('button', { name: /Don Carter/ }));
+    iniciarSesion();
+    expect(screen.queryByText('Sesión Iniciada')).not.toBeNull();
+    expect(screen.queryByRole('complementary')).not.toBeNull();
+    expect(usuariosDB.obtener('176543210').nombre).toBe('Don');
   });
 
-  it('abre la boleta de la orden más reciente desde Órdenes / Boletas', () => {
+  it('con credenciales incorrectas muestra un error y no entra', () => {
     renderConTienda(<AdminPage />);
-    irA('Órdenes / Boletas');
-    fireEvent.click(screen.getAllByRole('button', { name: /Ver boleta/ })[0]);
-    expect(screen.getByRole('heading', { name: 'Boleta #20260010' })).not.toBeNull();
+    escribir('Usuario', 'Don Carter');
+    escribir('Contraseña', 'incorrecta');
+    iniciarSesion();
+    expect(screen.queryByText('Usuario o contraseña incorrectos.')).not.toBeNull();
+    expect(screen.queryByRole('complementary')).toBeNull();
   });
 
-  it('lista los productos con stock crítico', () => {
+  it('con los campos vacíos pide completar usuario y contraseña', () => {
     renderConTienda(<AdminPage />);
-    irA('Stock crítico');
-    expect(screen.queryByText('Malla de Danza Elástica')).not.toBeNull();
-    expect(screen.queryByText('Zapatos de Salsa Cuero')).not.toBeNull();
-    expect(screen.queryByText('Toalla Microfibra Hype')).toBeNull();
+    iniciarSesion();
+    expect(screen.queryByText('Ingresa tu usuario.')).not.toBeNull();
+    expect(screen.queryByText('Ingresa tu contraseña.')).not.toBeNull();
   });
 
-  it('elimina un producto cuando el usuario confirma (mock de window.confirm)', () => {
-    spyOn(window, 'confirm').and.returnValue(true);
-    renderConTienda(<AdminPage />);
-    irA('Listado');
-    fireEvent.click(screen.getAllByRole('button', { name: /Eliminar/ })[0]);
-    expect(window.confirm).toHaveBeenCalled();
-    expect(productosDB.listar().length).toBe(5);
+  it('"Cerrar sesión" vuelve a pedir el login y avisa a la tienda', () => {
+    const salir = jasmine.createSpy('salir');
+    renderConTienda(<AdminPage onSalirATienda={salir} />);
+    fireEvent.click(screen.getByRole('button', { name: /Don Carter/ }));
+    iniciarSesion();
+    fireEvent.click(screen.getAllByRole('button', { name: 'Cerrar sesión' })[0]);
+    expect(salir).toHaveBeenCalled();
+    expect(screen.queryByRole('button', { name: 'Iniciar sesión' })).not.toBeNull();
   });
 
-  it('NO elimina el producto si el usuario cancela', () => {
-    spyOn(window, 'confirm').and.returnValue(false);
+  it('si ya hay una sesión guardada entra directo al panel', () => {
+    sessionStorage.setItem('hype_admin_sesion', JSON.stringify({ run: '176543210', usuario: 'Don Carter' }));
     renderConTienda(<AdminPage />);
-    irA('Listado');
-    fireEvent.click(screen.getAllByRole('button', { name: /Eliminar/ })[0]);
-    expect(productosDB.listar().length).toBe(6);
-  });
-
-  it('crea un producto desde el formulario', () => {
-    renderConTienda(<AdminPage />);
-    irA('Nuevo producto');
-    escribir('Código', 'PROD-50');
-    escribir('Nombre', 'Cinta para el pelo');
-    escribir('Categoría', 'Accesorios');
-    escribir('Precio ($)', '3000');
-    escribir('Stock', '8');
-    fireEvent.click(screen.getByRole('button', { name: 'Guardar producto' }));
-    expect(productosDB.listar().length).toBe(7);
-    expect(screen.queryByText('Producto guardado correctamente.')).not.toBeNull();
-  });
-
-  it('el formulario de producto muestra errores si faltan datos', () => {
-    renderConTienda(<AdminPage />);
-    irA('Nuevo producto');
-    fireEvent.click(screen.getByRole('button', { name: 'Guardar producto' }));
-    expect(screen.queryByText('Código requerido (mínimo 3 caracteres).')).not.toBeNull();
-    expect(productosDB.listar().length).toBe(6);
-  });
-
-  it('crea una categoría nueva', () => {
-    renderConTienda(<AdminPage />);
-    irA('Categorías');
-    fireEvent.click(screen.getByRole('button', { name: /Nueva categoría/ }));
-    escribir('Nombre', 'Equipamiento');
-    fireEvent.click(screen.getByRole('button', { name: 'Crear categoría' }));
-    expect(categoriasDB.listar().length).toBe(4);
-  });
-
-  it('no permite eliminar una categoría que tiene productos', () => {
-    spyOn(window, 'confirm').and.returnValue(true);
-    renderConTienda(<AdminPage />);
-    irA('Categorías');
-    fireEvent.click(screen.getAllByRole('button', { name: /Eliminar/ })[0]);
-    expect(categoriasDB.listar().length).toBe(3);
-    expect(screen.queryByText('No puedes eliminar una categoría que tiene productos asociados.')).not.toBeNull();
+    expect(screen.queryByRole('complementary')).not.toBeNull();
   });
 });

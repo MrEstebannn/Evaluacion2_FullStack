@@ -25,6 +25,7 @@ function FormularioRegistro({ onRegistrar }) {
       nombre: v.nombre.trim(),
       apellidos: v.apellidos.trim(),
       correo: v.correo.trim(),
+      password: v.password,
       tipo: v.tipo,
       region: v.region,
       comuna: v.comuna,

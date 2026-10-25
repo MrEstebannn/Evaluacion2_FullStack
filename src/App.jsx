@@ -20,6 +20,7 @@ export default function App() {
   const [seccion, setSeccion] = useState('inicio');
   const [modal, setModal] = useState(null);
   const [menuAbierto, setMenuAbierto] = useState(false);
+  const [busquedaNavbar, setBusquedaNavbar] = useState({ texto: '', n: 0 });
 
   const cerrarModal = () => setModal(null);
 
@@ -51,6 +52,11 @@ export default function App() {
     }
     setMenuAbierto(false);
     setTimeout(() => document.getElementById(idAncla)?.scrollIntoView({ behavior: 'smooth' }), 60);
+  };
+
+  const buscarDesdeNavbar = (texto) => {
+    setBusquedaNavbar((anterior) => ({ texto, n: anterior.n + 1 }));
+    irA('productos');
   };
 
   const seleccionarItemMenu = (item) => (item.tipo === 'ancla' ? irAAncla(item.destino) : irA(item.destino));
@@ -101,12 +107,13 @@ export default function App() {
         onAbrirRegistro={() => setModal('registro')}
         onAbrirCarrito={() => setModal('carrito')}
         onAbrirMenu={() => setMenuAbierto(true)}
+        onBuscar={buscarDesdeNavbar}
       />
       <MenuLateral abierto={menuAbierto} items={ITEMS_MENU} onCerrar={() => setMenuAbierto(false)} onSeleccionar={seleccionarItemMenu} />
 
       <main>
         {seccion === 'inicio' && <InicioPage onIrATienda={() => irA('productos')} onAbrirCarrito={() => setModal('carrito')} />}
-        {seccion === 'productos' && <ProductosPage />}
+        {seccion === 'productos' && <ProductosPage key={busquedaNavbar.n} busqueda={busquedaNavbar.texto} />}
         {seccion === 'nosotros' && <NosotrosPage />}
         {seccion === 'blogs' && <BlogsPage />}
         {seccion === 'contacto' && <ContactoPage />}

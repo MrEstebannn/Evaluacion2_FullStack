@@ -1,4 +1,13 @@
-export default function Navbar({ cantidadCarrito, onIrInicio, onAbrirLogin, onAbrirRegistro, onAbrirCarrito, onAbrirMenu }) {
+import { useState } from 'react';
+
+export default function Navbar({ cantidadCarrito, onIrInicio, onAbrirLogin, onAbrirRegistro, onAbrirCarrito, onAbrirMenu, onBuscar = () => {} }) {
+  const [texto, setTexto] = useState('');
+
+  const buscar = (e) => {
+    e.preventDefault();
+    onBuscar(texto.trim());
+  };
+
   return (
     <nav className="navbar bg-body-tertiary fixed-top px-3">
       <div className="container-fluid">
@@ -6,6 +15,22 @@ export default function Navbar({ cantidadCarrito, onIrInicio, onAbrirLogin, onAb
           <img src="/img/logo-pagina.png" alt="Logo" width="70" height="70" />
           <h5 className="m-0 fw-bold">HYPE ACADEMIC</h5>
         </div>
+
+        <form className="col-12 col-md order-last order-md-0 mt-2 mt-md-0 mx-auto mx-md-4" style={{ maxWidth: 520 }} role="search" onSubmit={buscar}>
+          <div className="input-group">
+            <input
+              type="search"
+              className="form-control"
+              placeholder="Buscar productos…"
+              aria-label="Buscar productos"
+              value={texto}
+              onChange={(e) => setTexto(e.target.value)}
+            />
+            <button type="submit" className="btn btn-outline-secondary" aria-label="Buscar">
+              <i className="bi bi-search" />
+            </button>
+          </div>
+        </form>
 
         <div className="d-flex align-items-center ms-auto gap-2">
           <button type="button" className="btn btn-outline-secondary" onClick={onAbrirLogin}>Iniciar Sesión</button>

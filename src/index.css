@@ -10,6 +10,12 @@ body {
   padding-top: 90px;
 }
 
+@media (max-width: 767.98px) {
+  body:not(.admin-mode) {
+    padding-top: 150px;
+  }
+}
+
 .cursor-pointer {
   cursor: pointer;
 }

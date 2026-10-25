@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-export default function Navbar({ cantidadCarrito, onIrInicio, onAbrirLogin, onAbrirRegistro, onAbrirCarrito, onAbrirMenu, onBuscar = () => {} }) {
+export default function Navbar({ cantidadCarrito, onIrInicio, onAbrirLogin, onAbrirRegistro, onAbrirCarrito, onAbrirMenu, onBuscar = () => {}, usuario = null, onCerrarSesion = () => {} }) {
   const [texto, setTexto] = useState('');
 
   const buscar = (e) => {
@@ -33,8 +33,17 @@ export default function Navbar({ cantidadCarrito, onIrInicio, onAbrirLogin, onAb
         </form>
 
         <div className="d-flex align-items-center ms-auto gap-2">
-          <button type="button" className="btn btn-outline-secondary" onClick={onAbrirLogin}>Iniciar Sesión</button>
-          <button type="button" className="btn btn-outline-dark" onClick={onAbrirRegistro}>Inscribirse</button>
+          {usuario ? (
+            <>
+              <span className="small fw-semibold d-none d-md-inline" data-testid="usuario-activo">Hola, {usuario.nombre}</span>
+              <button type="button" className="btn btn-outline-secondary" onClick={onCerrarSesion}>Cerrar sesión</button>
+            </>
+          ) : (
+            <>
+              <button type="button" className="btn btn-outline-secondary" onClick={onAbrirLogin}>Iniciar Sesión</button>
+              <button type="button" className="btn btn-outline-dark" onClick={onAbrirRegistro}>Inscribirse</button>
+            </>
+          )}
           <button type="button" className="btn btn-primary position-relative btn-hype" onClick={onAbrirCarrito}>
             🛒 Carrito
             <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" data-testid="cart-count">

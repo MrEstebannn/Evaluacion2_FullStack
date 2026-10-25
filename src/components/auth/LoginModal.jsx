@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import Modal from '../common/Modal';
 import Campo from '../common/Campo';
 import { useFormulario } from '../../hooks/useFormulario';
@@ -7,14 +8,26 @@ const INICIAL = { correo: '', password: '' };
 
 function FormularioLogin({ onExito }) {
   const { valores, errores, enviado, onChange, enviar } = useFormulario(INICIAL, validarLogin);
+  const [errorServidor, setErrorServidor] = useState('');
   const estado = (campo) => ({ error: Boolean(errores[campo]), validado: enviado && !errores[campo] });
 
+  const alExito = (v) => {
+    const resultado = onExito(v);
+    if (resultado && !resultado.ok) setErrorServidor(resultado.error);
+  };
+
+  const alEscribir = (e) => {
+    setErrorServidor('');
+    onChange(e);
+  };
+
   return (
-    <form onSubmit={enviar(onExito)} noValidate>
+    <form onSubmit={enviar(alExito)} noValidate>
+      {errorServidor && <div className="alert alert-danger">{errorServidor}</div>}
       <Campo id="loginCorreo" name="correo" type="email" label="Correo Electrónico" maxLength={100} placeholder="usuario@gmail.com"
-        value={valores.correo} onChange={onChange} feedback="Correo requerido (@gmail, @hotmail, @yahoo, @duocuc)." {...estado('correo')} />
+        value={valores.correo} onChange={alEscribir} feedback="Correo requerido (@gmail, @hotmail, @yahoo, @duocuc)." {...estado('correo')} />
       <Campo id="loginPass" name="password" type="password" label="Contraseña" maxLength={10}
-        value={valores.password} onChange={onChange} feedback="La contraseña debe tener entre 4 y 10 caracteres." {...estado('password')} />
+        value={valores.password} onChange={alEscribir} feedback="La contraseña debe tener entre 4 y 10 caracteres." {...estado('password')} />
       <button type="submit" className="btn btn-hype text-white w-100 fw-bold">Ingresar</button>
     </form>
   );

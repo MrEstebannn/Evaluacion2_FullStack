@@ -5,6 +5,7 @@ import LoginModal from './components/auth/LoginModal';
 import RegistroModal from './components/auth/RegistroModal';
 import CarritoModal from './components/carrito/CarritoModal';
 import PagoTarjetaModal from './components/pago/PagoTarjetaModal';
+import CheckoutModal from './components/pago/CheckoutModal';
 import InicioPage from './pages/InicioPage';
 import ProductosPage from './pages/ProductosPage';
 import NosotrosPage from './pages/NosotrosPage';
@@ -13,6 +14,8 @@ import ContactoPage from './pages/ContactoPage';
 import AdminPage from './pages/AdminPage';
 import { ITEMS_MENU } from './data/catalogo';
 import { useTienda } from './context/TiendaContext';
+import { useSesionCliente } from './hooks/useSesionCliente';
+import { clienteDeOrden } from './utils/checkout';
 import { empujarHistorial, estadoActual, reemplazarHistorial } from './utils/historial';
 
 export default function App() {
@@ -21,6 +24,8 @@ export default function App() {
   const [modal, setModal] = useState(null);
   const [menuAbierto, setMenuAbierto] = useState(false);
   const [busquedaNavbar, setBusquedaNavbar] = useState({ texto: '', n: 0 });
+  const sesion = useSesionCliente();
+  const [datosEntrega, setDatosEntrega] = useState(null);
 
   const cerrarModal = () => setModal(null);
 
@@ -61,23 +66,38 @@ export default function App() {
 
   const seleccionarItemMenu = (item) => (item.tipo === 'ancla' ? irAAncla(item.destino) : irA(item.destino));
 
-  const alLoginExitoso = () => {
-    notificar('¡Inicio de sesión exitoso!');
-    cerrarModal();
+  const alLoginExitoso = (credenciales) => {
+    const resultado = sesion.iniciarSesion(credenciales);
+    if (resultado.ok) {
+      notificar(`¡Bienvenido/a, ${resultado.usuario.nombre}!`);
+      cerrarModal();
+    }
+    return resultado;
+  };
+
+  const cerrarSesionCliente = () => {
+    sesion.cerrarSesion();
+    notificar('Sesión cerrada.', 'secondary');
   };
 
   const alRegistrar = (datosUsuario) => {
     const resultado = registrarUsuario(datosUsuario);
     if (resultado.ok) {
+      sesion.abrirSesion(datosUsuario.run);
       notificar('Usuario registrado exitosamente.');
       cerrarModal();
     }
     return resultado;
   };
 
+  const continuarAlPago = (datos) => {
+    setDatosEntrega(datos);
+    setModal('pago');
+  };
+
   const alPagoExitoso = () => {
     crearOrden({
-      cliente: { run: '—', nombre: 'Cliente web', correo: 'sin-sesion@hype.cl' },
+      cliente: clienteDeOrden(sesion.usuario, datosEntrega ?? undefined),
       items: carrito.items.map(({ nombre, precio, cantidad, idProducto }) => ({ nombre, precio, cantidad, ...(idProducto && { idProducto }) })),
       descuento: carrito.descuento,
     });
@@ -91,6 +111,7 @@ export default function App() {
 
     notificar('¡Pago procesado con éxito! Gracias por tu compra.');
     carrito.vaciarCarrito();
+    setDatosEntrega(null);
     cerrarModal();
   };
 
@@ -108,6 +129,8 @@ export default function App() {
         onAbrirCarrito={() => setModal('carrito')}
         onAbrirMenu={() => setMenuAbierto(true)}
         onBuscar={buscarDesdeNavbar}
+        usuario={sesion.usuario}
+        onCerrarSesion={cerrarSesionCliente}
       />
       <MenuLateral abierto={menuAbierto} items={ITEMS_MENU} onCerrar={() => setMenuAbierto(false)} onSeleccionar={seleccionarItemMenu} />
 
@@ -121,7 +144,8 @@ export default function App() {
 
       <LoginModal abierto={modal === 'login'} onCerrar={cerrarModal} onLoginExitoso={alLoginExitoso} />
       <RegistroModal abierto={modal === 'registro'} onCerrar={cerrarModal} onRegistrar={alRegistrar} />
-      <CarritoModal abierto={modal === 'carrito'} onCerrar={cerrarModal} onPagar={() => setModal('pago')} />
+      <CarritoModal abierto={modal === 'carrito'} onCerrar={cerrarModal} onPagar={() => setModal('checkout')} />
+      <CheckoutModal abierto={modal === 'checkout'} onCerrar={cerrarModal} usuario={sesion.usuario} onContinuar={continuarAlPago} />
       <PagoTarjetaModal abierto={modal === 'pago'} onCerrar={cerrarModal} onPagoExitoso={alPagoExitoso} />
     </>
   );

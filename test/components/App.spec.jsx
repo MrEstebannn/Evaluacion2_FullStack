@@ -23,7 +23,7 @@ describe('App (navegación e integración)', () => {
 
   it('abre el modal de inicio de sesión', () => {
     renderConTienda(<App />);
-    fireEvent.click(screen.getByText('Iniciar Sesión'));
+    fireEvent.click(screen.getByRole('button', { name: /iniciar sesión/i }));
     expect(within(screen.getByRole('dialog')).queryByText('Ingresar')).not.toBeNull();
   });
 

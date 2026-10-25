@@ -3,7 +3,6 @@ import AdminLayout from '../../src/admin/AdminLayout';
 import { productosDB, categoriasDB } from '../../src/data/db';
 import { limpiarAlmacenamiento, renderConTienda } from '../helpers';
 
-// Pruebas de INTEGRACIÓN del panel de administración (navegación interna, CRUD y filtros).
 describe('admin/AdminLayout (panel de administración)', () => {
   beforeEach(() => {
     limpiarAlmacenamiento();
@@ -25,7 +24,7 @@ describe('admin/AdminLayout (panel de administración)', () => {
   it('navega a Usuarios y lista los 3 usuarios iniciales', () => {
     renderConTienda(<AdminLayout />);
     irA('Usuarios');
-    expect(screen.getAllByRole('row').length).toBe(4); // encabezado + 3
+    expect(screen.getAllByRole('row').length).toBe(4);
   });
 
   it('filtra usuarios por texto de búsqueda (estado)', () => {

@@ -1,4 +1,3 @@
-/** Tarjeta de indicador. `color` es un color de Bootstrap: primary, success, warning, danger, info. */
 export default function KpiCard({ icono, titulo, valor, detalle, color = 'primary', onClick }) {
   return (
     <div className="card admin-card h-100">

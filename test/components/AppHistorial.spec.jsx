@@ -2,7 +2,6 @@ import { screen, fireEvent } from '@testing-library/react';
 import App from '../../src/App';
 import { limpiarAlmacenamiento, renderConTienda } from '../helpers';
 
-// El botón Atrás del navegador debe volver a la sección anterior (no salir del sitio).
 describe('App (historial del navegador)', () => {
   beforeEach(limpiarAlmacenamiento);
   afterAll(limpiarAlmacenamiento);

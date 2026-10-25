@@ -1,4 +1,3 @@
-/** Fila "nombre ........ valor" con barra de progreso de Bootstrap. */
 export default function BarraProgreso({ etiqueta, valorTexto, porcentaje, color = 'primary' }) {
   return (
     <div className="mb-3">

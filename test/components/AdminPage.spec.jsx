@@ -3,7 +3,6 @@ import AdminPage from '../../src/pages/AdminPage';
 import { usuariosDB } from '../../src/data/db';
 import { limpiarAlmacenamiento, renderConTienda } from '../helpers';
 
-// Pruebas del acceso al panel: formulario de login, usuario de prueba "Don Carter" y sesión.
 describe('pages/AdminPage (inicio de sesión del panel)', () => {
   const limpiar = () => {
     limpiarAlmacenamiento();

@@ -9,12 +9,10 @@ const validar = (v) => ({
   ...(v.password ? {} : { password: true }),
 });
 
-/** Pantalla de acceso al panel. `onIngresar(cuenta)` se llama solo con credenciales correctas. */
 export default function AdminLogin({ onIngresar, onVolver }) {
   const { valores, errores, enviado, onChange, cambiar, enviar } = useFormulario({ usuario: '', password: '' }, validar);
   const [credencialesInvalidas, setCredencialesInvalidas] = useState(false);
 
-  // Sin barra de la tienda: quita el padding superior del body
   useEffect(() => {
     document.body.classList.add('admin-mode');
     return () => document.body.classList.remove('admin-mode');
@@ -26,7 +24,6 @@ export default function AdminLogin({ onIngresar, onVolver }) {
     else setCredencialesInvalidas(true);
   };
 
-  // Al elegir un usuario de prueba se rellenan los datos; el botón "Iniciar sesión" lo aprieta la persona
   const usarCuenta = (cuenta) => {
     cambiar({ usuario: cuenta.usuario, password: cuenta.password });
     setCredencialesInvalidas(false);

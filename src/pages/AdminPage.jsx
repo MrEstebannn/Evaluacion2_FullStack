@@ -12,23 +12,16 @@ const leerSesion = () => {
   }
 };
 
-/**
- * Punto de entrada del panel: primero pide iniciar sesión y recién entonces muestra el panel.
- * La sesión dura mientras la pestaña esté abierta (sessionStorage).
- */
 export default function AdminPage({ onSalirATienda = () => {} }) {
   const { registrarUsuario, notificar } = useTienda();
   const [sesion, setSesion] = useState(leerSesion);
 
   const ingresar = (cuenta) => {
-    // Asegura que el usuario exista en la base (si ya existía, no hace nada)
     registrarUsuario(cuenta.perfil);
     const nueva = { run: cuenta.perfil.run, usuario: cuenta.usuario };
     try {
       sessionStorage.setItem(CLAVE_SESION_ADMIN, JSON.stringify(nueva));
-    } catch {
-      /* sin sessionStorage la sesión dura solo hasta recargar */
-    }
+    } catch {}
     setSesion(nueva);
     notificar('Sesión Iniciada');
   };
@@ -36,9 +29,7 @@ export default function AdminPage({ onSalirATienda = () => {} }) {
   const cerrarSesion = () => {
     try {
       sessionStorage.removeItem(CLAVE_SESION_ADMIN);
-    } catch {
-      /* ignorar */
-    }
+    } catch {}
     setSesion(null);
     notificar('Sesión cerrada.', 'secondary');
     onSalirATienda();

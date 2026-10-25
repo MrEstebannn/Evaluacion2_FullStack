@@ -1,10 +1,7 @@
-// Cálculos del panel (funciones puras, sin React): fáciles de probar con Jasmine.
-
 export const MESES = ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'];
 
 const quitarTalla = (nombre) => nombre.replace(/ \(Talla .*\)$/, '');
 
-/** Solo las órdenes pagadas cuentan como venta. */
 export const ordenesPagadas = (ordenes) => ordenes.filter((o) => o.estado === 'Pagada');
 
 export const totalVentas = (ordenes) => ordenesPagadas(ordenes).reduce((suma, o) => suma + o.total, 0);
@@ -14,7 +11,6 @@ export function ticketPromedio(ordenes) {
   return pagadas.length ? Math.round(totalVentas(ordenes) / pagadas.length) : 0;
 }
 
-/** Ventas de los últimos `cantidad` meses (incluye meses sin ventas, con total 0). */
 export function ventasPorMes(ordenes, cantidad = 6, hoy = new Date()) {
   const meses = [];
   for (let i = cantidad - 1; i >= 0; i -= 1) {
@@ -32,7 +28,6 @@ export function ventasPorMes(ordenes, cantidad = 6, hoy = new Date()) {
   return meses;
 }
 
-/** Ranking por unidades vendidas (agrupa las tallas bajo el mismo producto). */
 export function masVendidos(ordenes, limite = 5) {
   const mapa = {};
   ordenesPagadas(ordenes).forEach((o) =>
@@ -50,7 +45,6 @@ export const productosCriticos = (productos) => productos.filter((p) => p.stockC
 
 export const valorInventario = (productos) => productos.reduce((s, p) => s + p.precio * p.stock, 0);
 
-/** Ingresos por categoría de producto; clases y membresías van en su propio grupo. */
 export function ventasPorCategoria(ordenes, productos) {
   const mapa = {};
   ordenesPagadas(ordenes).forEach((o) =>
@@ -69,7 +63,6 @@ export const comprasDeUsuario = (ordenes, usuario) =>
 export const contarPorEstado = (ordenes) =>
   ordenes.reduce((acc, o) => ({ ...acc, [o.estado]: (acc[o.estado] || 0) + 1 }), { Pagada: 0, Pendiente: 0, Cancelada: 0 });
 
-/** Descarga un CSV (separador ;) para abrirlo directo en Excel. */
 export function descargarCSV(nombreArchivo, filas) {
   const texto = filas.map((fila) => fila.map((c) => `"${String(c).replace(/"/g, '""')}"`).join(';')).join('\n');
   const blob = new Blob([`\uFEFF${texto}`], { type: 'text/csv;charset=utf-8;' });

@@ -109,7 +109,6 @@ export const usuariosDB = {
   },
 };
 
-// ---------- Categorías ----------
 const CATEGORIAS_INICIALES = [
   { id: 1, nombre: 'Vestuario', descripcion: 'Mallas, pants y ropa para entrenar.' },
   { id: 2, nombre: 'Calzado', descripcion: 'Zapatillas y zapatos para cada estilo de baile.' },
@@ -138,8 +137,6 @@ export const categoriasDB = {
   },
 };
 
-// ---------- Órdenes / boletas ----------
-// Una orden = una compra. cliente: { run, nombre, correo }. items: [{ nombre, precio, cantidad, idProducto? }]
 const orden = (id, numero, fecha, cliente, items, estado, descuento = 0) => {
   const subtotal = items.reduce((s, i) => s + i.precio * i.cantidad, 0);
   return { id, numero, fecha, cliente, items, subtotal, descuento, total: Math.max(subtotal - descuento, 0), estado };
@@ -168,7 +165,6 @@ export const ordenesDB = {
   obtener(id) {
     return this.listar().find((o) => o.id === id) ?? null;
   },
-  /** CREATE: calcula número correlativo, fecha y totales. */
   crear({ cliente, items, descuento = 0, estado = 'Pagada' }) {
     const lista = this.listar();
     const ultimo = lista.reduce((max, o) => Math.max(max, Number(o.numero)), 20260000);

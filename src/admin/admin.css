@@ -1,4 +1,3 @@
-/* Estilos del panel de administración (prefijo admin-) */
 body.admin-mode {
   padding-top: 0;
   background: #f4f5fb;
@@ -103,7 +102,6 @@ body.admin-mode {
 }
 .avatar-grande { width: 84px; height: 84px; font-size: 1.8rem; }
 
-/* Pantalla de acceso */
 .admin-login {
   min-height: 100vh;
   display: grid;

@@ -71,8 +71,6 @@ export const ITEMS_MENU = [
   { etiqueta: 'Contacto Info', tipo: 'ancla', destino: 'contacto-info' },
 ];
 
-// Cuentas de acceso al panel de administración (demo para la evaluación; en un sistema real
-// las credenciales viven en el backend y las contraseñas nunca van en el código).
 export const CUENTAS_ADMIN = [
   {
     usuario: 'Don Carter',

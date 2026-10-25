@@ -18,7 +18,6 @@ import UsuarioDetalleView from './views/UsuarioDetalleView';
 import ReportesView from './views/ReportesView';
 import PerfilView from './views/PerfilView';
 
-// vista -> componente y miga de pan que se muestra arriba
 const VISTAS = {
   dashboard: { Componente: DashboardView, migas: ['Dashboard'] },
   ordenes: { Componente: OrdenesView, migas: ['Órdenes / Boletas'] },
@@ -35,22 +34,16 @@ const VISTAS = {
   perfil: { Componente: PerfilView, migas: ['Perfil'] },
 };
 
-/**
- * Contenedor del panel. Tiene su propia navegación interna (estado `ruta`),
- * igual que App.jsx usa `seccion` para la tienda.
- */
 export default function AdminLayout({ runSesion, onSalirATienda = () => {}, onCerrarSesion = () => {} }) {
   const { usuarios } = useTienda();
   const [ruta, setRuta] = useState(() => estadoActual()?.ruta ?? { vista: 'dashboard' });
   const [menuAbierto, setMenuAbierto] = useState(false);
 
-  // Quita el padding-top que usa la tienda por su navbar fija
   useEffect(() => {
     document.body.classList.add('admin-mode');
     return () => document.body.classList.remove('admin-mode');
   }, []);
 
-  // Botón Atrás/Adelante del navegador: vuelve a la vista anterior del panel
   useEffect(() => {
     reemplazarHistorial({ seccion: 'admin', ruta });
     const alVolver = (e) => {
@@ -61,7 +54,6 @@ export default function AdminLayout({ runSesion, onSalirATienda = () => {}, onCe
     };
     window.addEventListener('popstate', alVolver);
     return () => window.removeEventListener('popstate', alVolver);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const ir = (vista, params = {}) => {

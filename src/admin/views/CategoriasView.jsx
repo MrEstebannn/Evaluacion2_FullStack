@@ -27,7 +27,7 @@ function FormularioCategoria({ categoria, categorias, onGuardar }) {
 
 export default function CategoriasView() {
   const { categorias, productos, agregarCategoria, actualizarCategoria, eliminarCategoria, actualizarProducto, notificar } = useTienda();
-  const [modal, setModal] = useState(null); // null | { categoria?: obj }
+  const [modal, setModal] = useState(null);
 
   const cantidadProductos = (nombre) => productos.filter((p) => p.categoria === nombre).length;
 
@@ -35,7 +35,6 @@ export default function CategoriasView() {
     if (modal.categoria) {
       const anterior = modal.categoria.nombre;
       actualizarCategoria(modal.categoria.id, datos);
-      // Mantiene consistentes los productos que usaban el nombre anterior
       if (anterior !== datos.nombre) productos.filter((p) => p.categoria === anterior).forEach((p) => actualizarProducto(p.id, { categoria: datos.nombre }));
       notificar('Categoría actualizada.');
     } else {

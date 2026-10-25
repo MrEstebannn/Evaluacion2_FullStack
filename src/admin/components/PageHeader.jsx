@@ -1,4 +1,3 @@
-/** Título de cada vista + botones de acción a la derecha. */
 export default function PageHeader({ titulo, subtitulo, children }) {
   return (
     <div className="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-4 no-print">

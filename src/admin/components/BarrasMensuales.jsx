@@ -1,6 +1,5 @@
 import { formatoCLP } from '../../utils/formato';
 
-/** Gráfico de barras sencillo hecho solo con HTML/CSS (sin librerías). */
 export default function BarrasMensuales({ datos }) {
   const maximo = Math.max(...datos.map((d) => d.total), 1);
 

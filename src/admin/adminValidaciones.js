@@ -20,5 +20,4 @@ export function validarPerfil(v) {
   return errores;
 }
 
-/** Descuento opcional de 0 a 90 %. */
 export const descuentoValido = (valor) => valor === '' || (Number(valor) >= 0 && Number(valor) <= 90 && Number.isInteger(Number(valor)));

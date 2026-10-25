@@ -27,7 +27,6 @@ export default function App() {
 
   const cerrarModal = () => setModal(null);
 
-  // Historial del navegador: el botón Atrás vuelve a la sección anterior en vez de salir del sitio
   useEffect(() => {
     if (!estadoActual()?.seccion) reemplazarHistorial({ seccion: 'inicio' });
 
@@ -76,14 +75,12 @@ export default function App() {
   };
 
   const alPagoExitoso = () => {
-    // Registra la compra como orden para que aparezca en el panel de administración
     crearOrden({
       cliente: { run: '—', nombre: 'Cliente web', correo: 'sin-sesion@hype.cl' },
       items: carrito.items.map(({ nombre, precio, cantidad, idProducto }) => ({ nombre, precio, cantidad, ...(idProducto && { idProducto }) })),
       descuento: carrito.descuento,
     });
 
-    // Descuenta del inventario los productos vendidos (las clases y membresías no tienen stock)
     carrito.items
       .filter((item) => item.idProducto)
       .forEach((item) => {
@@ -96,7 +93,6 @@ export default function App() {
     cerrarModal();
   };
 
-  // El panel de administración tiene su propio layout (sin la barra de la tienda)
   if (seccion === 'admin') {
     return <AdminPage onSalirATienda={() => irA('inicio')} />;
   }

@@ -49,7 +49,7 @@ public/img/                  imágenes (nombres normalizados, sin espacios ni ti
 - El campo correo del registro tenía `maxlength=100` en el HTML pero el JS rechazaba más de 30; ahora el límite es **100** en ambos.
 - Se rechaza registrar un **RUN repetido** (el RUN es la clave del CRUD de usuarios).
 - La tarjeta valida número (15–16 dígitos), expiración `MM/AA` y CVV numérico. **Los datos de tarjeta no se guardan.**
-- La contraseña del registro no se almacena en localStorage.
+- La contraseña del registro se guarda en localStorage solo para simular el login; en un backend real se guardaría cifrada.
 - El panel de administración tiene botón **Eliminar** (usuarios y productos); `db.js` ya incluye `actualizar` para cuando agreguen edición.
 - Los productos y usuarios ahora **persisten** en localStorage (`hype_productos`, `hype_usuarios`); el carrito sigue en `hype_cart`.
 - El id `contacto` del bloque de información pasó a `contacto-info` para no chocar con la página del formulario.

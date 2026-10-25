@@ -15,6 +15,7 @@ import AdminPage from './pages/AdminPage';
 import { ITEMS_MENU } from './data/catalogo';
 import { useTienda } from './context/TiendaContext';
 import { useSesionCliente } from './hooks/useSesionCliente';
+import { clienteDeOrden } from './utils/checkout';
 import { empujarHistorial, estadoActual, reemplazarHistorial } from './utils/historial';
 
 export default function App() {
@@ -96,7 +97,7 @@ export default function App() {
 
   const alPagoExitoso = () => {
     crearOrden({
-      cliente: { run: '—', nombre: 'Cliente web', correo: 'sin-sesion@hype.cl' },
+      cliente: clienteDeOrden(sesion.usuario, datosEntrega ?? undefined),
       items: carrito.items.map(({ nombre, precio, cantidad, idProducto }) => ({ nombre, precio, cantidad, ...(idProducto && { idProducto }) })),
       descuento: carrito.descuento,
     });
@@ -110,6 +111,7 @@ export default function App() {
 
     notificar('¡Pago procesado con éxito! Gracias por tu compra.');
     carrito.vaciarCarrito();
+    setDatosEntrega(null);
     cerrarModal();
   };
 

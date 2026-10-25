@@ -5,6 +5,7 @@ import LoginModal from './components/auth/LoginModal';
 import RegistroModal from './components/auth/RegistroModal';
 import CarritoModal from './components/carrito/CarritoModal';
 import PagoTarjetaModal from './components/pago/PagoTarjetaModal';
+import CheckoutModal from './components/pago/CheckoutModal';
 import InicioPage from './pages/InicioPage';
 import ProductosPage from './pages/ProductosPage';
 import NosotrosPage from './pages/NosotrosPage';
@@ -23,6 +24,7 @@ export default function App() {
   const [menuAbierto, setMenuAbierto] = useState(false);
   const [busquedaNavbar, setBusquedaNavbar] = useState({ texto: '', n: 0 });
   const sesion = useSesionCliente();
+  const [datosEntrega, setDatosEntrega] = useState(null);
 
   const cerrarModal = () => setModal(null);
 
@@ -87,6 +89,11 @@ export default function App() {
     return resultado;
   };
 
+  const continuarAlPago = (datos) => {
+    setDatosEntrega(datos);
+    setModal('pago');
+  };
+
   const alPagoExitoso = () => {
     crearOrden({
       cliente: { run: '—', nombre: 'Cliente web', correo: 'sin-sesion@hype.cl' },
@@ -135,7 +142,8 @@ export default function App() {
 
       <LoginModal abierto={modal === 'login'} onCerrar={cerrarModal} onLoginExitoso={alLoginExitoso} />
       <RegistroModal abierto={modal === 'registro'} onCerrar={cerrarModal} onRegistrar={alRegistrar} />
-      <CarritoModal abierto={modal === 'carrito'} onCerrar={cerrarModal} onPagar={() => setModal('pago')} />
+      <CarritoModal abierto={modal === 'carrito'} onCerrar={cerrarModal} onPagar={() => setModal('checkout')} />
+      <CheckoutModal abierto={modal === 'checkout'} onCerrar={cerrarModal} usuario={sesion.usuario} onContinuar={continuarAlPago} />
       <PagoTarjetaModal abierto={modal === 'pago'} onCerrar={cerrarModal} onPagoExitoso={alPagoExitoso} />
     </>
   );

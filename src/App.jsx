@@ -15,14 +15,10 @@ import { ITEMS_MENU } from './data/catalogo';
 import { useTienda } from './context/TiendaContext';
 import { empujarHistorial, estadoActual, reemplazarHistorial } from './utils/historial';
 
-/**
- * Componente raíz: decide qué "página" se muestra (estado `seccion`)
- * y cuál modal está abierto (estado `modal`). Reemplaza mostrarSeccion() del HTML.
- */
 export default function App() {
   const { carrito, registrarUsuario, crearOrden, productos, actualizarProducto, notificar } = useTienda();
   const [seccion, setSeccion] = useState('inicio');
-  const [modal, setModal] = useState(null); // 'login' | 'registro' | 'carrito' | 'pago' | null
+  const [modal, setModal] = useState(null);
   const [menuAbierto, setMenuAbierto] = useState(false);
 
   const cerrarModal = () => setModal(null);
@@ -48,7 +44,6 @@ export default function App() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  // Vuelve al Inicio y baja con scroll suave hasta un bloque (Clases, Membresías o Contacto)
   const irAAncla = (idAncla) => {
     if (seccion !== 'inicio') {
       empujarHistorial({ seccion: 'inicio' });

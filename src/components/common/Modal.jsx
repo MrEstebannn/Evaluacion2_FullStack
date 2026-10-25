@@ -1,9 +1,5 @@
 import { useEffect } from 'react';
 
-/**
- * Modal reutilizable con las clases de Bootstrap (sin necesitar el JS de Bootstrap).
- * `tamano` admite 'modal-lg', 'modal-sm', etc.
- */
 export default function Modal({ abierto, titulo, onCerrar, tamano = '', footer = null, children }) {
   useEffect(() => {
     if (!abierto) return undefined;

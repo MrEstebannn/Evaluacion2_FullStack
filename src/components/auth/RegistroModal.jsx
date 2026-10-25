@@ -15,7 +15,6 @@ function FormularioRegistro({ onRegistrar }) {
   const [errorServidor, setErrorServidor] = useState('');
   const estado = (campo) => ({ error: Boolean(errores[campo]), validado: enviado && !errores[campo] });
 
-  // Las comunas dependen de la región elegida (valor derivado, no necesita estado propio)
   const comunas = REGIONES_Y_COMUNAS.find((r) => r.region === valores.region)?.comunas ?? [];
 
   const cambiarRegion = (e) => cambiar({ region: e.target.value, comuna: '' });

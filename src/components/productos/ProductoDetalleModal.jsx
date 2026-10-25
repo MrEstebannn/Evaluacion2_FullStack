@@ -2,7 +2,6 @@ import { useState } from 'react';
 import Modal from '../common/Modal';
 import { formatoCLP } from '../../utils/formato';
 
-/** Contenido del detalle. Vive dentro del Modal, así su estado (talla) se reinicia en cada apertura. */
 function DetalleProducto({ producto, onAgregar }) {
   const [talla, setTalla] = useState(producto.tallas?.[0] ?? '');
 

@@ -8,7 +8,6 @@ import { useNotificacion } from './NotificacionContext';
 
 const TiendaContext = createContext(null);
 
-/** Estado global de la tienda: productos, usuarios y carrito (todos respaldados por db.js / localStorage). */
 export function TiendaProvider({ children }) {
   const { notificar } = useNotificacion();
   const productosApi = useProductos();

@@ -13,10 +13,6 @@ function leerCarrito() {
 
 const nuevoId = () => `${Date.now()}-${Math.random().toString(36).slice(2, 7)}`;
 
-/**
- * Lógica del carrito (productos con stock y clases/membresías con cupos).
- * Recibe la lista de productos para validar stock y `notificar` para avisar al usuario.
- */
 export function useCarrito(productos, notificar) {
   const [items, setItems] = useState(leerCarrito);
   const [descuento, setDescuento] = useState(0);
@@ -24,9 +20,7 @@ export function useCarrito(productos, notificar) {
   useEffect(() => {
     try {
       localStorage.setItem(CLAVE_CARRITO, JSON.stringify(items));
-    } catch {
-      /* ignorar */
-    }
+    } catch {}
   }, [items]);
 
   const cantidadTotal = useMemo(() => items.reduce((acc, i) => acc + i.cantidad, 0), [items]);
@@ -45,7 +39,6 @@ export function useCarrito(productos, notificar) {
     });
   };
 
-  /** Agrega un producto de la tienda (valida stock). Devuelve true si se agregó. */
   const agregarProducto = (idProducto, talla = '') => {
     const p = productos.find((x) => x.id === idProducto);
     if (!p) return false;
@@ -60,7 +53,6 @@ export function useCarrito(productos, notificar) {
     return true;
   };
 
-  /** Agrega una clase o membresía (valida cupos). Devuelve true si se agregó. */
   const agregarClase = (nombre, precio, cupoMax) => {
     const existente = items.find((i) => i.nombre === nombre);
     const cantidadActual = existente ? existente.cantidad : 0;
@@ -98,7 +90,6 @@ export function useCarrito(productos, notificar) {
 
   const eliminarItem = (idItem) => setItems((prev) => prev.filter((i) => i.id !== idItem));
 
-  /** Valida el cupón. Devuelve true si es válido. */
   const aplicarCupon = (codigo) => {
     const valido = CUPONES_VALIDOS.includes(codigo.trim().toUpperCase());
     setDescuento(valido ? DESCUENTO_CUPON : 0);

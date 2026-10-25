@@ -1,6 +1,5 @@
 import { formatoCLP } from '../../utils/formato';
 
-/** Tarjeta de una clase de baile. Es "tonta": recibe todo por props. */
 export default function ClaseCard({ clase, onInscribir }) {
   return (
     <div className="col">

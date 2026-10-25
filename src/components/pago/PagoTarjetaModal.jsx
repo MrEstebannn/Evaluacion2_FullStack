@@ -30,7 +30,6 @@ function FormularioTarjeta({ onPagoExitoso }) {
   );
 }
 
-/** Simula el pago: los datos de la tarjeta se validan pero NO se guardan en ningún lado. */
 export default function PagoTarjetaModal({ abierto, onCerrar, onPagoExitoso }) {
   return (
     <Modal abierto={abierto} titulo="Ingreso de Datos de Tarjeta" onCerrar={onCerrar}>

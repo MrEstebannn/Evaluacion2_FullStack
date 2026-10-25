@@ -1,4 +1,3 @@
-/** Barra superior fija: logo, acciones (sesión, registro, carrito) y botón del menú lateral. */
 export default function Navbar({ cantidadCarrito, onIrInicio, onAbrirLogin, onAbrirRegistro, onAbrirCarrito, onAbrirMenu }) {
   return (
     <nav className="navbar bg-body-tertiary fixed-top px-3">

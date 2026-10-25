@@ -2,7 +2,6 @@ import { createContext, useCallback, useContext, useState } from 'react';
 
 const NotificacionContext = createContext(null);
 
-/** Reemplaza los alert() del HTML original por avisos (toasts) de Bootstrap. */
 export function NotificacionProvider({ children }) {
   const [mensajes, setMensajes] = useState([]);
 

@@ -1,6 +1,3 @@
-// Funciones de validación puras (sin React): fáciles de probar con pruebas unitarias.
-// Cada validador devuelve un objeto con SOLO los campos inválidos, p. ej. { correo: true }.
-
 const DOMINIOS_VALIDOS = ['@gmail.com', '@hotmail.com', '@yahoo.com', '@duocuc.cl', '@duoc.cl', '@profesor.duoc.cl'];
 
 export const contarEspacios = (texto) => (texto.match(/ /g) || []).length;

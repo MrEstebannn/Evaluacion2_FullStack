@@ -1,4 +1,3 @@
-/** Menú lateral (offcanvas de Bootstrap controlado por estado de React). */
 export default function MenuLateral({ abierto, items, onCerrar, onSeleccionar }) {
   if (!abierto) return null;
 

@@ -1,6 +1,3 @@
-// Datos estáticos de la academia (no cambian durante la ejecución).
-// Los datos que sí se modifican (productos y usuarios) viven en db.js.
-
 export const CLASES = [
   { id: 1, estilo: 'Ballet', nombre: 'Ballet Principiante', imagen: '/img/foto-ballet.jpg', duracion: 60, cupos: 15, precio: 25000, color: '#ec4899' },
   { id: 2, estilo: 'Salsa', nombre: 'Salsa Avanzado', imagen: '/img/foto-salsa.jpg', duracion: 60, cupos: 20, precio: 20000, color: '#dc2626' },
@@ -59,7 +56,6 @@ export const TIPOS_USUARIO = ['Cliente', 'Vendedor', 'Administrador'];
 export const CUPONES_VALIDOS = ['HYPE10', 'DESCUENTO10', 'SEPTIEMBRE10'];
 export const DESCUENTO_CUPON = 5000;
 
-// Opciones del menú lateral. tipo 'ancla' = vuelve al Inicio y baja a un bloque.
 export const ITEMS_MENU = [
   { etiqueta: 'Clases', tipo: 'ancla', destino: 'clases' },
   { etiqueta: 'Tipos de membresía', tipo: 'ancla', destino: 'membresias' },

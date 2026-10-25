@@ -1,6 +1,3 @@
-// Fuente de datos simulada ("base de datos") con CRUD + persistencia en localStorage.
-// Los componentes NO tocan localStorage directamente: usan estas funciones (vía hooks).
-
 const KEYS = {
   productos: 'hype_productos',
   usuarios: 'hype_usuarios',
@@ -23,38 +20,29 @@ const USUARIOS_INICIALES = [
   { run: '201234567', nombre: 'Carlos', apellidos: 'López', correo: 'carlos@gmail.com', tipo: 'Cliente', region: 'Región Metropolitana de Santiago', comuna: 'Maipú' },
 ];
 
-// ---------- utilidades de persistencia ----------
 function leer(clave, datosIniciales) {
   try {
     const guardado = localStorage.getItem(clave);
     if (guardado) return JSON.parse(guardado);
-  } catch {
-    /* si localStorage falla se usan los datos iniciales */
-  }
+  } catch {}
   return JSON.parse(JSON.stringify(datosIniciales));
 }
 
 function guardar(clave, datos) {
   try {
     localStorage.setItem(clave, JSON.stringify(datos));
-  } catch {
-    /* sin persistencia, la app sigue funcionando en memoria */
-  }
+  } catch {}
 }
 
-// ---------- CRUD de productos ----------
 export const productosDB = {
-  /** READ: lista todos los productos */
   listar() {
     return leer(KEYS.productos, PRODUCTOS_INICIALES);
   },
 
-  /** READ: obtiene un producto por id */
   obtener(id) {
     return this.listar().find((p) => p.id === id) ?? null;
   },
 
-  /** CREATE: agrega un producto y lo devuelve */
   crear(datos) {
     const nuevo = {
       id: Date.now(),
@@ -66,20 +54,17 @@ export const productosDB = {
     return nuevo;
   },
 
-  /** UPDATE: modifica campos de un producto existente */
   actualizar(id, cambios) {
     const lista = this.listar().map((p) => (p.id === id ? { ...p, ...cambios } : p));
     guardar(KEYS.productos, lista);
     return lista.find((p) => p.id === id) ?? null;
   },
 
-  /** DELETE: elimina un producto por id */
   eliminar(id) {
     guardar(KEYS.productos, this.listar().filter((p) => p.id !== id));
   },
 };
 
-// ---------- CRUD de usuarios (clave: RUN) ----------
 export const usuariosDB = {
   listar() {
     return leer(KEYS.usuarios, USUARIOS_INICIALES);
@@ -89,7 +74,6 @@ export const usuariosDB = {
     return this.listar().find((u) => u.run === run) ?? null;
   },
 
-  /** CREATE: devuelve { ok, usuario } o { ok:false, error } si el RUN ya existe */
   crear(datos) {
     if (this.obtener(datos.run)) {
       return { ok: false, error: 'Ya existe un usuario registrado con ese RUN.' };

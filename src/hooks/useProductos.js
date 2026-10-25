@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { productosDB } from '../data/db';
 
-/** Conecta el "archivo de persistencia" (db.js) con React: cada operación refresca el estado. */
 export function useProductos() {
   const [productos, setProductos] = useState(() => productosDB.listar());
 

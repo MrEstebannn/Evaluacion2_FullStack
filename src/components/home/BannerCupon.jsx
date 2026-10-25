@@ -1,4 +1,3 @@
-/** Se muestra únicamente durante septiembre (mes 8 en JavaScript). */
 export default function BannerCupon({ fecha = new Date() }) {
   if (fecha.getMonth() !== 8) return null;
 

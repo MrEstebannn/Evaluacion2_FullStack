@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { formatoCLP } from '../../utils/formato';
 
-/** Tarjeta de producto. Maneja su propio estado: la talla elegida. */
 export default function ProductoCard({ producto, onVerDetalle, onAgregar }) {
   const [talla, setTalla] = useState(producto.tallas?.[0] ?? '');
 

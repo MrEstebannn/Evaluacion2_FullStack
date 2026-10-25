@@ -4,11 +4,10 @@ import CarritoItem from './CarritoItem';
 import { useTienda } from '../../context/TiendaContext';
 import { formatoCLP } from '../../utils/formato';
 
-/** Contenido del carrito (estado local: cupón escrito y su mensaje). */
 function ContenidoCarrito() {
   const { carrito } = useTienda();
   const [cupon, setCupon] = useState('');
-  const [feedback, setFeedback] = useState(null); // { ok, mensaje }
+  const [feedback, setFeedback] = useState(null);
 
   const aplicar = () => {
     const valido = carrito.aplicarCupon(cupon);

@@ -32,6 +32,15 @@ describe('App (historial del navegador)', () => {
     expect(screen.queryByText('Noticias y Casos Curiosos')).not.toBeNull();
   });
 
+  it('guarda parámetros de detalle en el historial y los restaura', () => {
+    renderConTienda(<App />);
+    fireEvent.click(screen.getByLabelText('Abrir menú'));
+    fireEvent.click(screen.getByRole('button', { name: /Tienda & Productos/ }));
+    fireEvent.click(screen.getAllByRole('button', { name: 'Ver Detalle' })[0]);
+    expect(window.history.state).toEqual({ seccion: 'producto-detalle', params: { id: 101 } });
+    fireEvent(window, new PopStateEvent('popstate', { state: { seccion: 'producto-detalle', params: { id: 103 } } }));
+    expect(screen.getByRole('heading', { name: 'Pants Urban Hip-Hop' })).not.toBeNull();
+  });
   it('Atrás cierra los modales abiertos', () => {
     renderConTienda(<App />);
     fireEvent.click(screen.getByText('Iniciar Sesión'));

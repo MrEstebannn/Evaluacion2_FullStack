@@ -45,3 +45,9 @@ body {
 .img-cover-220 { height: 220px; object-fit: cover; }
 
 .menu-lateral-link h4 { margin: 0; }
+
+@media print {
+  nav, .navbar, .no-print, button { display: none !important; }
+  body { padding-top: 0 !important; }
+  .container { max-width: 100% !important; }
+}

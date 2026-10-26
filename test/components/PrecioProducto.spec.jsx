@@ -1,0 +1,3 @@
+import { render, screen } from '@testing-library/react';
+import PrecioProducto from '../../src/components/productos/PrecioProducto';
+describe('PrecioProducto',()=>{it('presenta precio anterior, oferta y porcentaje',()=>{render(<PrecioProducto producto={{precio:10000,precioOferta:7500}}/>);expect(screen.getByText(/10.000/).tagName).toBe('DEL');expect(screen.getByText(/7.500/)).not.toBeNull();expect(screen.getByText('25% OFF')).not.toBeNull();});});

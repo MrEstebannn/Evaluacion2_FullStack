@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">11.11% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>1/9</span>
+                <span class='fraction'>9/9</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>0/4</span>
+                <span class='fraction'>4/4</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>0/3</span>
+                <span class='fraction'>3/3</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">12.5% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>1/8</span>
+                <span class='fraction'>8/8</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line low'></div>
+    <div class='status-line high'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -113,16 +113,16 @@
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">18x</span>
+<span class="cline-any cline-yes">18x</span>
+<span class="cline-any cline-yes">54x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">18x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">18x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -154,17 +154,17 @@ import { validarContacto } from '../utils/validaciones';
 &nbsp;
 const INICIAL = { nombre: '', correo: '', comentario: '' };
 &nbsp;
-export default function <span class="fstat-no" title="function not covered" >ContactoPage(</span>) {
-  const { valores, errores, enviado, onChange, enviar, reiniciar } = <span class="cstat-no" title="statement not covered" >useFormulario(INICIAL, validarContacto);</span>
-  const [mensajeEnviado, setMensajeEnviado] = <span class="cstat-no" title="statement not covered" >useState(false);</span>
-  const estado = <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >(c</span>ampo) =&gt; (<span class="cstat-no" title="statement not covered" >{ error: Boolean(errores[campo]), validado: enviado &amp;&amp; !errores[campo] })</span>;</span>
+export default function ContactoPage() {
+  const { valores, errores, enviado, onChange, enviar, reiniciar } = useFormulario(INICIAL, validarContacto);
+  const [mensajeEnviado, setMensajeEnviado] = useState(false);
+  const estado = (campo) =&gt; ({ error: Boolean(errores[campo]), validado: enviado &amp;&amp; !errores[campo] });
 &nbsp;
-  const alExito = <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >()</span> =&gt; {</span>
-<span class="cstat-no" title="statement not covered" >    setMensajeEnviado(true);</span>
-<span class="cstat-no" title="statement not covered" >    reiniciar();</span>
+  const alExito = () =&gt; {
+    setMensajeEnviado(true);
+    reiniciar();
   };
 &nbsp;
-<span class="cstat-no" title="statement not covered" >  return (</span>
+  return (
     &lt;div className="container my-5 pt-4" id="contacto-form-seccion"&gt;
       &lt;div className="card shadow-sm border-0 p-4 p-md-5"&gt;
         &lt;h2 className="fw-bold text-center mb-2"&gt;Formulario de Contacto&lt;/h2&gt;
@@ -196,7 +196,7 @@ export default function <span class="fstat-no" title="function not covered" >Con
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2026-10-23T23:11:33.473Z
+                at 2026-10-26T02:31:41.734Z
             </div>
         <script src="../../prettify.js"></script>
         <script>

@@ -5,6 +5,7 @@ import { AdminNavContext } from '../src/admin/AdminNavContext';
 
 export function limpiarAlmacenamiento() {
   localStorage.clear();
+  window.history.replaceState({ seccion: 'inicio', params: {} }, '');
 }
 
 export function renderConTienda(ui) {

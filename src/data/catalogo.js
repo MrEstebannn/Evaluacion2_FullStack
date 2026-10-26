@@ -51,6 +51,7 @@ export const REGIONES_Y_COMUNAS = [
 ];
 
 export const CATEGORIAS_PRODUCTO = ['Vestuario', 'Calzado', 'Accesorios'];
+export const OPCIONES_ENTREGA = [{ id: 'domicilio', nombre: 'Despacho a domicilio', precio: 3990 }, { id: 'express', nombre: 'Despacho express', precio: 6990 }, { id: 'retiro', nombre: 'Retiro en tienda', precio: 0 }];
 export const TIPOS_USUARIO = ['Cliente', 'Vendedor', 'Administrador'];
 
 export const CUPONES_VALIDOS = ['HYPE10', 'DESCUENTO10', 'SEPTIEMBRE10'];
@@ -60,6 +61,8 @@ export const ITEMS_MENU = [
   { etiqueta: 'Clases', tipo: 'ancla', destino: 'clases' },
   { etiqueta: 'Tipos de membresía', tipo: 'ancla', destino: 'membresias' },
   { etiqueta: 'Tienda & Productos', tipo: 'seccion', destino: 'productos' },
+  { etiqueta: 'Categorías', tipo: 'seccion', destino: 'categorias' },
+  { etiqueta: 'Ofertas', tipo: 'seccion', destino: 'ofertas' },
   { etiqueta: 'Nosotros', tipo: 'seccion', destino: 'nosotros' },
   { etiqueta: 'Noticias & Blogs', tipo: 'seccion', destino: 'blogs' },
   { etiqueta: 'Formulario de Contacto', tipo: 'seccion', destino: 'contacto' },

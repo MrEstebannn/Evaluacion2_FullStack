@@ -7,9 +7,9 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "test": "karma start karma.conf.cjs --single-run",
+    "test": "karma start karma.conf.cjs --single-run --browsers ChromeHeadlessSinSandbox",
     "test:watch": "karma start karma.conf.cjs",
-    "test:coverage": "karma start karma.conf.cjs --single-run --coverage"
+    "test:coverage": "karma start karma.conf.cjs --single-run --coverage --browsers ChromeHeadlessSinSandbox"
   },
   "dependencies": {
     "bootstrap": "^5.3.3",

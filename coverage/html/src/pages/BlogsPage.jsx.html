@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>0/4</span>
+                <span class='fraction'>3/3</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>0/2</span>
+                <span class='fraction'>1/1</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">75% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>0/3</span>
+                <span class='fraction'>3/4</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>0/4</span>
+                <span class='fraction'>3/3</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line low'></div>
+    <div class='status-line high'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -84,65 +84,56 @@
 <a name='L19'></a><a href='#L19'>19</a>
 <a name='L20'></a><a href='#L20'>20</a>
 <a name='L21'></a><a href='#L21'>21</a>
-<a name='L22'></a><a href='#L22'>22</a>
-<a name='L23'></a><a href='#L23'>23</a>
-<a name='L24'></a><a href='#L24'>24</a>
-<a name='L25'></a><a href='#L25'>25</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L22'></a><a href='#L22'>22</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">8x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { useState } from 'react';
-import { BLOGS } from '../data/catalogo';
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { BLOGS } from '../data/catalogo';
 import BlogCard from '../components/blogs/BlogCard';
-import Modal from '../components/common/Modal';
 &nbsp;
-export default function <span class="fstat-no" title="function not covered" >BlogsPage(</span>) {
-  const [blogAbierto, setBlogAbierto] = <span class="cstat-no" title="statement not covered" >useState(null);</span>
-&nbsp;
-<span class="cstat-no" title="statement not covered" >  return (</span>
+export default function BlogsPage({ onVerBlog = <span class="fstat-no" title="function not covered" >()</span> =&gt; {} }) {
+  return (
     &lt;div className="container my-5 pt-4" id="blogs-seccion"&gt;
       &lt;h1 className="text-center fw-bold mb-2"&gt;Noticias y Casos Curiosos&lt;/h1&gt;
-      &lt;h5 className="text-center text-muted mb-4 fs-6"&gt;Descubre artículos interesantes y datos sobre la cultura de la danza.&lt;/h5&gt;
+      &lt;h5 className="text-center text-muted mb-4 fs-6"&gt;
+        Descubre artículos interesantes y datos sobre la cultura de la danza.
+      &lt;/h5&gt;
       &lt;div className="row row-cols-1 row-cols-md-2 g-4"&gt;
-        {BLOGS.map(<span class="fstat-no" title="function not covered" >(b</span>) =&gt; (
-<span class="cstat-no" title="statement not covered" >          &lt;BlogCard key={b.id} blog={b} onVer={setBlogAbierto} /&gt;</span>
+        {BLOGS.map((blog) =&gt; (
+          &lt;BlogCard
+            key={blog.id}
+            blog={blog}
+            onVer={() =&gt; onVerBlog(blog.id)}
+          /&gt;
         ))}
       &lt;/div&gt;
-&nbsp;
-      &lt;Modal abierto={Boolean(blogAbierto)} titulo={blogAbierto?.titulo ?? ''} onCerrar={<span class="fstat-no" title="function not covered" >()</span> =&gt; <span class="cstat-no" title="statement not covered" >setBlogAbierto(null)}</span> tamano="modal-lg"&gt;
-        &lt;p className="fs-6"&gt;{blogAbierto?.texto}&lt;/p&gt;
-      &lt;/Modal&gt;
     &lt;/div&gt;
   );
-}
-&nbsp;</pre></td></tr></table></pre>
+}</pre></td></tr></table></pre>
 
                 <div class='push'></div><!-- for sticky footer -->
             </div><!-- /wrapper -->
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2026-10-23T23:11:33.473Z
+                at 2026-10-26T02:31:41.734Z
             </div>
         <script src="../../prettify.js"></script>
         <script>

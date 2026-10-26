@@ -1,0 +1,2 @@
+import { procesarPago } from '../../src/utils/pago';
+describe('utils/pago',()=>{it('rechaza tarjetas terminadas en 0000',()=>expect(procesarPago({numero:'4111111111110000'}).ok).toBeFalse());it('acepta las demás',()=>expect(procesarPago({numero:'4111111111111111'}).ok).toBeTrue());});

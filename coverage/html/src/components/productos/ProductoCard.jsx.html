@@ -103,14 +103,45 @@
 <a name='L38'></a><a href='#L38'>38</a>
 <a name='L39'></a><a href='#L39'>39</a>
 <a name='L40'></a><a href='#L40'>40</a>
-<a name='L41'></a><a href='#L41'>41</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L41'></a><a href='#L41'>41</a>
+<a name='L42'></a><a href='#L42'>42</a>
+<a name='L43'></a><a href='#L43'>43</a>
+<a name='L44'></a><a href='#L44'>44</a>
+<a name='L45'></a><a href='#L45'>45</a>
+<a name='L46'></a><a href='#L46'>46</a>
+<a name='L47'></a><a href='#L47'>47</a>
+<a name='L48'></a><a href='#L48'>48</a>
+<a name='L49'></a><a href='#L49'>49</a>
+<a name='L50'></a><a href='#L50'>50</a>
+<a name='L51'></a><a href='#L51'>51</a>
+<a name='L52'></a><a href='#L52'>52</a>
+<a name='L53'></a><a href='#L53'>53</a>
+<a name='L54'></a><a href='#L54'>54</a>
+<a name='L55'></a><a href='#L55'>55</a>
+<a name='L56'></a><a href='#L56'>56</a>
+<a name='L57'></a><a href='#L57'>57</a>
+<a name='L58'></a><a href='#L58'>58</a>
+<a name='L59'></a><a href='#L59'>59</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">207x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">207x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">44x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">44x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -124,17 +155,22 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">120x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">569x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">5x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -144,37 +180,56 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { useState } from 'react';
-import { formatoCLP } from '../../utils/formato';
+import PrecioProducto from './PrecioProducto';
 &nbsp;
-/** Tarjeta de producto. Maneja su propio estado: la talla elegida. */
 export default function ProductoCard({ producto, onVerDetalle, onAgregar }) {
   const [talla, setTalla] = useState(producto.tallas?.[0] ?? '');
 &nbsp;
   return (
     &lt;div className="col"&gt;
       &lt;div className="card h-100 shadow-sm border-0"&gt;
-        &lt;img src={producto.imagen} className="card-img-top img-cover-180" alt={producto.nombre} /&gt;
+        &lt;img
+          src={producto.imagen}
+          className="card-img-top img-cover-180"
+          alt={producto.nombre}
+        /&gt;
         &lt;div className="card-body d-flex flex-column"&gt;
-          &lt;span className="badge bg-secondary mb-2 align-self-start"&gt;{producto.categoria}&lt;/span&gt;
+          &lt;span className="badge bg-secondary mb-2 align-self-start"&gt;
+            {producto.categoria}
+          &lt;/span&gt;
           &lt;h5 className="h6 fw-bold mb-1"&gt;{producto.nombre}&lt;/h5&gt;
-          &lt;p className="fw-bold fs-5 mb-2"&gt;{formatoCLP(producto.precio)}&lt;/p&gt;
-&nbsp;
+          &lt;PrecioProducto producto={producto} /&gt;
           {producto.tallas?.length &gt; 0 &amp;&amp; (
             &lt;div className="mb-2"&gt;
-              &lt;label htmlFor={`talla-${producto.id}`} className="form-label small fw-semibold mb-1"&gt;Talla:&lt;/label&gt;
-              &lt;select id={`talla-${producto.id}`} className="form-select form-select-sm" value={talla} onChange={(e) =&gt; setTalla(e.target.value)}&gt;
-                {producto.tallas.map((t) =&gt; (
-                  &lt;option key={t} value={t}&gt;{t}&lt;/option&gt;
+              &lt;label
+                htmlFor={'talla-' + producto.id}
+                className="form-label small fw-semibold mb-1"
+              &gt;
+                Talla:
+              &lt;/label&gt;
+              &lt;select
+                id={'talla-' + producto.id}
+                className="form-select form-select-sm"
+                value={talla}
+                onChange={(e) =&gt; setTalla(e.target.value)}
+              &gt;
+                {producto.tallas.map((opcion) =&gt; (
+                  &lt;option key={opcion} value={opcion}&gt;{opcion}&lt;/option&gt;
                 ))}
               &lt;/select&gt;
             &lt;/div&gt;
           )}
-&nbsp;
           &lt;div className="mt-auto d-grid gap-2"&gt;
-            &lt;button type="button" className="btn btn-outline-dark btn-sm fw-semibold" onClick={() =&gt; onVerDetalle(producto)}&gt;
+            &lt;button
+              className="btn btn-outline-dark btn-sm fw-semibold"
+              onClick={() =&gt; onVerDetalle(producto)}
+            &gt;
               Ver Detalle
             &lt;/button&gt;
-            &lt;button type="button" className="btn btn-hype text-white btn-sm fw-semibold" onClick={() =&gt; onAgregar(producto, talla)}&gt;
+            &lt;button
+              className="btn btn-hype text-white btn-sm fw-semibold"
+              onClick={() =&gt; onAgregar(producto, talla)}
+            &gt;
               Añadir al Carrito
             &lt;/button&gt;
           &lt;/div&gt;
@@ -182,15 +237,14 @@ export default function ProductoCard({ producto, onVerDetalle, onAgregar }) {
       &lt;/div&gt;
     &lt;/div&gt;
   );
-}
-&nbsp;</pre></td></tr></table></pre>
+}</pre></td></tr></table></pre>
 
                 <div class='push'></div><!-- for sticky footer -->
             </div><!-- /wrapper -->
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2026-10-23T23:11:33.473Z
+                at 2026-10-26T02:31:41.734Z
             </div>
         <script src="../../../prettify.js"></script>
         <script>

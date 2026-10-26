@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">42.85% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>6/14</span>
+                <span class='fraction'>14/14</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>0/2</span>
+                <span class='fraction'>2/2</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">40% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>2/5</span>
+                <span class='fraction'>5/5</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">41.66% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>5/12</span>
+                <span class='fraction'>12/12</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line low'></div>
+    <div class='status-line high'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -91,25 +91,25 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">23x</span>
+<span class="cline-any cline-yes">103x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">23x</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">23x</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">103x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">23x</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">103x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">23x</span>
+<span class="cline-any cline-yes">103x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">103x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { useState } from 'react';
 import { usuariosDB } from '../data/db';
@@ -117,20 +117,20 @@ import { usuariosDB } from '../data/db';
 export function useUsuarios() {
   const [usuarios, setUsuarios] = useState(() =&gt; usuariosDB.listar());
 &nbsp;
-  const registrarUsuario = <span class="fstat-no" title="function not covered" >(d</span>atos) =&gt; {
-    const resultado = <span class="cstat-no" title="statement not covered" >usuariosDB.crear(datos);</span>
-<span class="cstat-no" title="statement not covered" >    if (resultado.ok) <span class="cstat-no" title="statement not covered" >setUsuarios(usuariosDB.listar());</span></span>
-<span class="cstat-no" title="statement not covered" >    return resultado;</span>
+  const registrarUsuario = (datos) =&gt; {
+    const resultado = usuariosDB.crear(datos);
+    if (resultado.ok) setUsuarios(usuariosDB.listar());
+    return resultado;
   };
 &nbsp;
-  const actualizarUsuario = <span class="fstat-no" title="function not covered" >(r</span>un, cambios) =&gt; {
-<span class="cstat-no" title="statement not covered" >    usuariosDB.actualizar(run, cambios);</span>
-<span class="cstat-no" title="statement not covered" >    setUsuarios(usuariosDB.listar());</span>
+  const actualizarUsuario = (run, cambios) =&gt; {
+    usuariosDB.actualizar(run, cambios);
+    setUsuarios(usuariosDB.listar());
   };
 &nbsp;
-  const eliminarUsuario = <span class="fstat-no" title="function not covered" >(r</span>un) =&gt; {
-<span class="cstat-no" title="statement not covered" >    usuariosDB.eliminar(run);</span>
-<span class="cstat-no" title="statement not covered" >    setUsuarios(usuariosDB.listar());</span>
+  const eliminarUsuario = (run) =&gt; {
+    usuariosDB.eliminar(run);
+    setUsuarios(usuariosDB.listar());
   };
 &nbsp;
   return { usuarios, registrarUsuario, actualizarUsuario, eliminarUsuario };
@@ -142,7 +142,7 @@ export function useUsuarios() {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2026-10-23T23:11:33.473Z
+                at 2026-10-26T02:31:41.734Z
             </div>
         <script src="../../prettify.js"></script>
         <script>

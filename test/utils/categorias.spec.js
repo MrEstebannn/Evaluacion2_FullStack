@@ -1,0 +1,2 @@
+import { contarPorCategoria, productosDeCategoria } from '../../src/utils/categorias';
+describe('utils/categorias',()=>{const ps=[{id:1,categoria:'Vestuario'},{id:2,categoria:'Calzado'}];const cs=[{id:1,nombre:'Vestuario'},{id:2,nombre:'Calzado'}];it('filtra y cuenta productos',()=>{expect(productosDeCategoria(ps,cs[0])).toEqual([ps[0]]);expect(contarPorCategoria(ps,cs).map(c=>c.cantidadProductos)).toEqual([1,1]);});});

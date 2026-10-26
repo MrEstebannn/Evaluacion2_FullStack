@@ -6,6 +6,7 @@ describe('hooks/useCarrito', () => {
   const PRODUCTOS = [
     { id: 1, nombre: 'Zapatillas', precio: 10000, stock: 2 },
     { id: 2, nombre: 'Toalla', precio: 5000, stock: 10 },
+    { id: 3, nombre: 'Malla', precio: 10000, precioOferta: 8000, stock: 3 },
   ];
   let notificar;
 
@@ -32,6 +33,12 @@ describe('hooks/useCarrito', () => {
     expect(notificar).toHaveBeenCalledWith('Producto agregado al carrito.', 'success');
   });
 
+  it('agrega los productos en oferta al precio final', () => {
+    const { result } = crearCarrito();
+    act(() => { result.current.agregarProducto(3); });
+    expect(result.current.items[0].precio).toBe(8000);
+    expect(result.current.subtotal).toBe(8000);
+  });
   it('agregar el mismo producto dos veces suma la cantidad', () => {
     const { result } = crearCarrito();
     act(() => { result.current.agregarProducto(2); });

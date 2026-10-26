@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
 import { CUPONES_VALIDOS, DESCUENTO_CUPON } from '../data/catalogo';
+import { precioFinal } from '../utils/ofertas';
 
 const CLAVE_CARRITO = 'hype_cart';
 
@@ -48,7 +49,7 @@ export function useCarrito(productos, notificar) {
       return false;
     }
     const nombreFinal = talla ? `${p.nombre} (Talla ${talla})` : p.nombre;
-    sumarAlCarrito(nombreFinal, { idProducto: p.id, nombre: nombreFinal, precio: p.precio });
+    sumarAlCarrito(nombreFinal, { idProducto: p.id, nombre: nombreFinal, precio: precioFinal(p) });
     notificar('Producto agregado al carrito.', 'success');
     return true;
   };

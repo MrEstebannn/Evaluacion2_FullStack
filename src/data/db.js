@@ -6,9 +6,9 @@ const KEYS = {
 };
 
 const PRODUCTOS_INICIALES = [
-  { id: 101, codigo: 'PROD-01', nombre: 'Zapatillas de Ballet Profesional', categoria: 'Calzado', precio: 35000, stock: 12, stockCritico: 3, imagen: '/img/zapatillas-ballet.webp', desc: 'Zapatillas flexibles de lona de alta durabilidad para prácticas y presentaciones.', tallas: ['35', '36', '37', '38', '39', '40'] },
-  { id: 102, codigo: 'PROD-02', nombre: 'Malla de Danza Elástica', categoria: 'Vestuario', precio: 22000, stock: 5, stockCritico: 5, imagen: '/img/malla-danza-elastica.jpeg', desc: 'Malla ergonómica transpirable ideal para entrenamiento intensivo.' },
-  { id: 103, codigo: 'PROD-03', nombre: 'Pants Urban Hip-Hop', categoria: 'Vestuario', precio: 28000, stock: 20, stockCritico: 4, imagen: '/img/pants-urban-hiphop.avif', desc: 'Pantalón holgado de algodón reforzado diseñado para la danza urbana.', tallas: ['S', 'M', 'L', 'XL'] },
+  { id: 101, codigo: 'PROD-01', nombre: 'Zapatillas de Ballet Profesional', categoria: 'Calzado', precio: 35000, precioOferta: 29990, stock: 12, stockCritico: 3, imagen: '/img/zapatillas-ballet.webp', desc: 'Zapatillas flexibles de lona de alta durabilidad para prácticas y presentaciones.', tallas: ['35', '36', '37', '38', '39', '40'] },
+  { id: 102, codigo: 'PROD-02', nombre: 'Malla de Danza Elástica', categoria: 'Vestuario', precio: 22000, precioOferta: 18990, stock: 5, stockCritico: 5, imagen: '/img/malla-danza-elastica.jpeg', desc: 'Malla ergonómica transpirable ideal para entrenamiento intensivo.' },
+  { id: 103, codigo: 'PROD-03', nombre: 'Pants Urban Hip-Hop', categoria: 'Vestuario', precio: 28000, precioOferta: 23990, stock: 20, stockCritico: 4, imagen: '/img/pants-urban-hiphop.avif', desc: 'Pantalón holgado de algodón reforzado diseñado para la danza urbana.', tallas: ['S', 'M', 'L', 'XL'] },
   { id: 104, codigo: 'PROD-04', nombre: 'Zapatos de Salsa Cuero', categoria: 'Calzado', precio: 45000, stock: 2, stockCritico: 3, imagen: '/img/zapatos-salsa-cuero.webp', desc: 'Calzado de cuero legítimo con suela antideslizante para giros rápidos.', tallas: ['36', '37', '38', '39', '40', '41', '42'] },
   { id: 105, codigo: 'PROD-05', nombre: 'Toalla Microfibra Hype', categoria: 'Accesorios', precio: 12000, stock: 30, stockCritico: 10, imagen: '/img/toalla-microfibra.webp', desc: 'Toalla ligera de secado ultrarrápido con diseño de la academia.' },
   { id: 106, codigo: 'PROD-06', nombre: 'Botella Térmica 750ml', categoria: 'Accesorios', precio: 15000, stock: 15, stockCritico: 5, imagen: '/img/botella-termica.webp', desc: 'Mantiene tus bebidas frías durante toda tu jornada de entrenamiento.' },
@@ -121,9 +121,9 @@ export const categoriasDB = {
   },
 };
 
-const orden = (id, numero, fecha, cliente, items, estado, descuento = 0) => {
+const orden = (id, numero, fecha, cliente, items, estado, descuento = 0, envio = 0) => {
   const subtotal = items.reduce((s, i) => s + i.precio * i.cantidad, 0);
-  return { id, numero, fecha, cliente, items, subtotal, descuento, total: Math.max(subtotal - descuento, 0), estado };
+  return { id, numero, fecha, cliente, items, subtotal, descuento, envio, total: Math.max(subtotal - descuento, 0) + envio, estado };
 };
 const JUAN = { run: '19011022K', nombre: 'Juan Pérez', correo: 'juan@duocuc.cl' };
 const MARIA = { run: '182345678', nombre: 'Maria Gómez', correo: 'maria@hotmail.com' };
@@ -149,10 +149,10 @@ export const ordenesDB = {
   obtener(id) {
     return this.listar().find((o) => o.id === id) ?? null;
   },
-  crear({ cliente, items, descuento = 0, estado = 'Pagada' }) {
+  crear({ cliente, items, descuento = 0, envio = 0, estado = 'Pagada' }) {
     const lista = this.listar();
     const ultimo = lista.reduce((max, o) => Math.max(max, Number(o.numero)), 20260000);
-    const nueva = orden(Date.now(), String(ultimo + 1), new Date().toISOString(), cliente, items, estado, descuento);
+    const nueva = orden(Date.now(), String(ultimo + 1), new Date().toISOString(), cliente, items, estado, descuento, envio);
     guardar(KEYS.ordenes, [...lista, nueva]);
     return nueva;
   },
